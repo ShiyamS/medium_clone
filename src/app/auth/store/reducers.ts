@@ -1,7 +1,7 @@
 import { state } from '@angular/animations';
 
 import { AuthStateInterface } from "../types/authState.interface"
-import { register } from "./actions"
+import { authAuction } from "./actions"
 import { createFeature, createReducer, on } from "@ngrx/store"
 
 const inialState: AuthStateInterface = {
@@ -12,7 +12,7 @@ const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
     inialState,
-    on(register, (state) => ({ ...state, isSubmitting: true }))
+    on(authAuction.register, (state) => ({ ...state, isSubmitting: true }))
   )
 })
 

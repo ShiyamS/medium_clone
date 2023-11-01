@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { FormControl, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { register } from '../../store/actions';
+import { authAuction } from '../../store/actions';
 import { RegisterRequestInterface } from '../../types/registerRequest.interface';
 import { RouterLink } from '@angular/router';
 import { AuthStateInterface } from '../../types/authState.interface';
@@ -25,7 +25,7 @@ export class RegisterComponent {
   isSubmitting$ = this.store.select(selectIsSubmitting)
 
 
-  constructor(private fb: FormBuilder, private store: Store<{ auth: AuthStateInterface }>, private AuthService: AuthService) { }
+  constructor(private fb: FormBuilder, private store: Store, private AuthService: AuthService) { }
 
   onSubmit() {
     // console.log('form', this.form.getRawValue());
@@ -34,9 +34,9 @@ export class RegisterComponent {
     }
 
     console.log(request);
-    this.store.dispatch(register({ request }));
+    this.store.dispatch(authAuction.register({ request }));
 
-    this.AuthService.register(request).subscribe((res) => console.log(res))
+    // this.AuthService.register(request).subscribe((res) => console.log(res))
   }
 
 
