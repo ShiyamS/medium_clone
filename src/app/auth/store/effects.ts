@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { authAuction, } from './actions';
 import { map, switchMap, catchError, of, pipe } from 'rxjs';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const registerEffect = createEffect((
   actions$ = inject(Actions), authService = inject(AuthService)
@@ -15,8 +16,10 @@ export const registerEffect = createEffect((
         map((currentUser: CurrentUserInterface) => {
           return authAuction.registerSuccess({ currentUser })
         }),
-        catchError(() => {
-          return of(authAuction.registerFailure());
+        catchError((errorResponse: HttpErrorResponse) => {
+          return of(authAuction.registerFailure({
+            errors: errorResponse.error.errors
+          }));
         })
 
       )
